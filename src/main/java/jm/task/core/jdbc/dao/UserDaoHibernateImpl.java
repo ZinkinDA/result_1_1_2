@@ -23,8 +23,8 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.createNativeQuery("CREATE TABLE IF NOT EXISTS testdb.user (id INT NOT NULL AUTO_INCREMENT,name VARCHAR(45) NOT NULL," +
-                    "lastName VARCHAR(45) NOT NULL,age INT NOT NULL, PRIMARY KEY(id))");
+            session.createNativeQuery("CREATE TABLE IF NOT EXISTS user (id INT NOT NULL AUTO_INCREMENT,name VARCHAR(45) NOT NULL," +
+                    "lastName VARCHAR(45) NOT NULL,age INT NOT NULL, PRIMARY KEY(id))").executeUpdate();
             transaction.commit();
             System.out.println("Таблица создана");
         } catch (HibernateException e){
@@ -42,7 +42,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.createNativeQuery("DROP TABLE IF EXISTS testdb.user");
+            session.createNativeQuery("DROP TABLE IF EXISTS user").executeUpdate();
             transaction.commit();
             System.out.println("Таблица удалена!");
         } catch (HibernateException e) {
@@ -79,7 +79,6 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = session.beginTransaction();
         try {
             session.delete(session.get(User.class, id));
-//            session.createNativeQuery("");
             transaction.commit();
             System.out.println("User deleted!");
         } catch (HibernateException e) {
@@ -117,7 +116,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.createNativeQuery("TRUNCATE TABLE testdb.user");
+            session.createNativeQuery("TRUNCATE TABLE user").executeUpdate();
             transaction.commit();
         } catch (HibernateException e){
             e.printStackTrace();
